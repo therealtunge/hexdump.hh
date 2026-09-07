@@ -8,7 +8,7 @@
 #if __cplusplus >= 202302L
 #	include <print>
 #else
-#include <iostream>
+#	include <iostream>
 #endif
 
 namespace hexdump
@@ -65,7 +65,7 @@ namespace hexdump
 		}
 
 	public:
-		void dump(char const *data, std::size_t size)
+		void dump(const char *data, std::size_t size)
 		{
 
 			auto aligned_size = size - (size % width);
@@ -88,15 +88,9 @@ namespace hexdump
 		}
 
 
-		void dump(std::span<char> span)
-		{
-			dump(span.data(), span.size());
-		}
+		void dump(std::span<char> span) { dump(span.data(), span.size()); }
 
-		void dump(std::string_view view)
-		{
-			dump((const char*)view.begin(), view.size());
-		}
+		void dump(std::string_view view) { dump((const char *)view.begin(), view.size()); }
 
 		bool dump_file(std::ifstream &i)
 		{
