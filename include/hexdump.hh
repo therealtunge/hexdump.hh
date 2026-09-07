@@ -1,14 +1,13 @@
+#if __cplusplus < 202302L
+#error C++23 or above!
+#endif
+
 #include <cctype>
 #include <cstddef>
 #include <format>
 #include <fstream>
 #include <span>
-
-#if __cplusplus >= 202302L
-#	include <print>
-#else
-#	include <iostream>
-#endif
+#include <print>
 
 namespace hexdump
 {
@@ -72,18 +71,10 @@ namespace hexdump
 
 			for (std::size_t offset = 0; offset < aligned_size; offset += width)
 			{
-#if __cplusplus >= 202302L
 				std::println("{}", hexdump_single(data, offset, width));
-#else
-				std::cout << hexdump_single(data, size, width) << '\n';
-#endif
 			}
 
-#if __cplusplus >= 202302L
 			std::println("{}", hexdump_single(data, aligned_size, size % width));
-#else
-			std::cout << hexdump_single(data, size, width) << '\n';
-#endif
 		}
 
 
