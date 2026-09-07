@@ -5,9 +5,9 @@
 
 #if __cplusplus >= 202302L
 #	include <print>
-#endif
+#else
 #include <iostream>
-#include <vector>
+#endif
 
 namespace hexdump
 {
@@ -88,6 +88,8 @@ namespace hexdump
 		{
 			auto buffer = std::string(std::istreambuf_iterator<char>(i), {});
 			dump((unsigned char *)buffer.data(), buffer.size());
+
+			return true;
 		}
 	};
 }
