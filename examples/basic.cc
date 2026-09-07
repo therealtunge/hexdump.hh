@@ -1,4 +1,5 @@
 #include <hexdump.hh>
+#include <iostream>
 
 const char data[] = {
 	'h',
