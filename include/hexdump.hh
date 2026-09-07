@@ -74,14 +74,14 @@ namespace hexdump
 #if __cplusplus >= 202302L
 				std::println("{}", hexdump_single(data, offset, width));
 #else
-				std::cout << hexdump_single(data, size) << '\n';
+				std::cout << hexdump_single(data, size, width) << '\n';
 #endif
 			}
 
 #if __cplusplus >= 202302L
 			std::println("{}", hexdump_single(data, aligned_size, size % width));
 #else
-			std::cout << hexdump_single(data, size) << '\n';
+			std::cout << hexdump_single(data, size, width) << '\n';
 #endif
 		}
 		inline bool dump(std::ifstream &i)
