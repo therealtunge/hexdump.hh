@@ -86,26 +86,8 @@ namespace hexdump
 		}
 		inline bool dump(std::ifstream &i)
 		{
-			i.seekg(std::ios::end);
-
-			auto size = i.tellg();
-
-			i.seekg(std::ios::beg);
-
-
-			std::vector<unsigned char> buffer(size);
-
-
-			// this is ugly
-			if (i.read((char *)buffer.data(), size))
-			{
-				dump(buffer.data(), size);
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			auto buffer = std::string(std::istreambuf_iterator<char>(i), {});
+			dump((unsigned char *)buffer.data(), buffer.size());
 		}
 	};
 }
