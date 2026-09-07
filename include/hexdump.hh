@@ -3,7 +3,6 @@
 #include <format>
 #include <fstream>
 #include <span>
-#include <string_view>
 
 #if __cplusplus >= 202302L
 #	include <print>
@@ -88,9 +87,7 @@ namespace hexdump
 		}
 
 
-		void dump(std::span<char> span) { dump(span.data(), span.size()); }
-
-		void dump(std::string_view view) { dump((const char *)view.begin(), view.size()); }
+		void dump(std::span<const char> span) { dump(span.data(), span.size()); }
 
 		bool dump_file(std::ifstream &i)
 		{
