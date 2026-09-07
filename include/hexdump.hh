@@ -2,6 +2,8 @@
 #include <cstddef>
 #include <format>
 #include <fstream>
+#include <span>
+#include <string_view>
 
 #if __cplusplus >= 202302L
 #	include <print>
@@ -24,7 +26,7 @@ namespace hexdump
 		bool show_address = true;
 
 	private:
-		std::string hexdump_single(unsigned char *data, std::size_t offset, int left_line)
+		std::string hexdump_single(const unsigned char *data, std::size_t offset, int left_line)
 		{
 			std::string ret = "|";
 
@@ -63,7 +65,7 @@ namespace hexdump
 		}
 
 	public:
-		inline void dump(unsigned char *data, std::size_t size)
+		void dump(unsigned char const *data, std::size_t size)
 		{
 
 			auto aligned_size = size - (size % width);
@@ -84,7 +86,19 @@ namespace hexdump
 			std::cout << hexdump_single(data, size, width) << '\n';
 #endif
 		}
-		inline bool dump(std::ifstream &i)
+
+
+		void dump(std::span<unsigned char> span)
+		{
+			dump(span.data(), span.size());
+		}
+
+		void dump(std::string_view view)
+		{
+			dump((unsigned const char*)view.begin(), view.size());
+		}
+
+		bool dump_file(std::ifstream &i)
 		{
 			auto buffer = std::string(std::istreambuf_iterator<char>(i), {});
 			dump((unsigned char *)buffer.data(), buffer.size());
